@@ -1,12 +1,5 @@
 pipeline {
     agent any
-
-    tools {
-        // Install JDK 11 (adjust the version according to your needs)
-        jdk 'JDK'
-        // Install Maven (if using Maven for the build)
-        maven 'Maven'
-    }
     
     stages {
         stage('Clone Repository') {
