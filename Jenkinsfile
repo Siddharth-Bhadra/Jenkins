@@ -3,9 +3,9 @@ pipeline {
 
     tools {
         // Install JDK 11 (adjust the version according to your needs)
-        jdk 'JDK 11'
+        jdk 'JDK'
         // Install Maven (if using Maven for the build)
-        maven 'Maven 3'
+        maven 'Maven'
     }
     
     stages {
