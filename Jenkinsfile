@@ -10,7 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Command to build your website (replace as necessary)
-                sh './build.sh' // For Java
+                sh 'javac App.java' // For Java
             }
         }
         stage('Test') {
