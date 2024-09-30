@@ -3,7 +3,7 @@ pipeline {
 
      tools {
         // Use the correct JDK version configured in Jenkins
-        jdk 'jdk-17.0.12'  // Adjust to match your configuration
+        jdk 'jdk-17.*.*'  // Adjust to match your configuration
     }
     
     stages {
