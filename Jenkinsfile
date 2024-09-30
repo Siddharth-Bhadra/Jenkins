@@ -1,7 +1,15 @@
 pipeline {
     agent any
+
+    tools {
+        // Install JDK 11 (adjust the version according to your needs)
+        jdk 'JDK 11'
+        // Install Maven (if using Maven for the build)
+        maven 'Maven 3'
+    }
+    
     stages {
-        stage('Clone') {
+        stage('Clone Repository') {
             steps {
                 // Clone the code from Git
                 git branch: 'main', url: 'https://github.com/Siddharth-Bhadra/Jenkins.git'
@@ -10,20 +18,39 @@ pipeline {
         stage('Build') {
             steps {
                 // Command to build your website (replace as necessary)
-                sh 'javac App.java' // For Java
+                sh 'mvn clean install' // For Java
             }
         }
         stage('Test') {
             steps {
                 // Run tests (if any)
-                sh 'java tests/' // For Python
+                sh 'mvn test' // 
+            }
+        }
+        stage('Run Application') {
+            steps {
+                // Run the Java application
+                sh 'java -jar target/app.jar' // Adjust the path to your JAR file
             }
         }
         stage('Deploy') {
             steps {
-                // Deploy the website (you can deploy to VM or any hosting service)
-             sh 'dependency-check --scan ./ --out report'
+               // Optional: Deploy the application (if needed)
+                // Example for SCP deployment to a server
+                sh 'scp -r target/app.jar user@targetVM:/path/to/deployment'
             }
+        }
+    }
+     post {
+        always {
+            // Clean up or send notifications, if required
+            echo 'Pipeline completed'
+        }
+        success {
+            echo 'Pipeline completed successfully'
+        }
+        failure {
+            echo 'Pipeline failed'
         }
     }
 }
