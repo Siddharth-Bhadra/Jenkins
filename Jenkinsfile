@@ -17,14 +17,14 @@ pipeline {
          stage('Compile') {
             steps {
                 // Compile the Java file
-                sh 'javac main/App.java'
+                sh 'javac App.java'
             }
         }
 
           stage('Run Application') {
             steps {
                 // Run the compiled Java class
-                sh 'java -jar main/App.jar'
+                sh 'java -jar App.jar'
             }
         }
 
