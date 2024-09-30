@@ -23,7 +23,7 @@ pipeline {
         stage('Run Application') {
             steps {
                 // Run the Java application
-                sh 'java -jar target/app.jar' // Adjust the path to your JAR file
+                sh 'java -jar target/App.jar' // Adjust the path to your JAR file
             }
         }
         stage('Deploy') {
