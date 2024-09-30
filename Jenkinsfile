@@ -24,7 +24,7 @@ pipeline {
           stage('Run Application') {
             steps {
                 // Run the compiled Java class
-                sh 'java -jar App.jar'
+                sh 'java -cp . App'
             }
         }
 
