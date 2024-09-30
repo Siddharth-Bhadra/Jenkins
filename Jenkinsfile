@@ -1,12 +1,5 @@
 pipeline {
     agent any
-
-      tools {
-        // Use the exact JDK name as configured in Global Tool Configuration
-        jdk 'jdk-17.0.12'
-        // Use the exact Maven name as configured in Global Tool Configuration
-        maven 'maven-3.6.3'
-    }
     
     stages {
         stage('Clone Repository') {
