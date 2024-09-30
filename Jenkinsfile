@@ -11,7 +11,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Command to build your website (replace as necessary)
-                sh 'mvn clean install' // For Java
+                sh 'mvn clean --file *.pom' // For Java
             }
         }
         stage('Test') {
