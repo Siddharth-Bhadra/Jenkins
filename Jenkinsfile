@@ -30,7 +30,7 @@ pipeline {
             steps {
                // Optional: Deploy the application (if needed)
                 // Example for SCP deployment to a server
-                sh 'scp -r target/app.jar user@targetVM:/path/to/deployment'
+                echo 'done!!!!'
             }
         }
     }
