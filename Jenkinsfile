@@ -16,7 +16,7 @@ pipeline {
         stage('Test') {
             steps {
                 // Run tests (if any)
-                sh 'pytest tests/' // For Python
+                sh 'java tests/' // For Python
             }
         }
         stage('Deploy') {
