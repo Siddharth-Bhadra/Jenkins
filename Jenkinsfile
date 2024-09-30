@@ -1,5 +1,10 @@
 pipeline {
     agent any
+
+     tools {
+        // Use the correct JDK version configured in Jenkins
+        jdk 'jdk-17.0.12'  // Adjust to match your configuration
+    }
     
     stages {
         stage('Clone Repository') {
@@ -8,29 +13,26 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Siddharth-Bhadra/Jenkins.git'
             }
         }
-        stage('Build') {
+
+         stage('Compile') {
             steps {
-                // Command to build your website (replace as necessary)
-                sh 'mvn clean --file *.pom' // For Java
+                // Compile the Java file
+                sh 'javac main/App.java'
             }
         }
+
+          stage('Run Application') {
+            steps {
+                // Run the compiled Java class
+                sh 'java -jar main/App.jar'
+            }
+        }
+
+        
         stage('Test') {
             steps {
-                // Run tests (if any)
-                sh 'mvn test' // 
-            }
-        }
-        stage('Run Application') {
-            steps {
-                // Run the Java application
-                sh 'java -jar target/App.jar' // Adjust the path to your JAR file
-            }
-        }
-        stage('Deploy') {
-            steps {
-               // Optional: Deploy the application (if needed)
-                // Example for SCP deployment to a server
-                echo 'done!!!!'
+                // If you have tests, you can add test steps here
+                echo 'No tests to run for now'
             }
         }
     }
