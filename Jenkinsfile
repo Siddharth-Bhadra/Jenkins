@@ -33,10 +33,10 @@ pipeline {
                         -Dsonar.sources=. \
                         -Dsonar.host.url=http://localhost:9000
                     '''
-                    }
                 }
             }
         }
+    
 
           stage('Run Application') {
             steps {
@@ -66,3 +66,4 @@ pipeline {
         }
     }
 
+}
