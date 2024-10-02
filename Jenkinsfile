@@ -62,14 +62,14 @@ pipeline {
                 publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: '.', reportFiles: '${ZAP_REPORT}', reportName: 'OWASP ZAP DAST Report'])
                 }
             }
-        }
+
 
   //        stage('Run Application') {
   //          steps {
   //              // Run the compiled Java class
   //              sh 'java -cp . App'
   //          }
-  //      }
+   //    }
 
         
         stage('Test') {
