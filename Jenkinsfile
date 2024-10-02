@@ -5,6 +5,14 @@ pipeline {
         // Use the correct JDK version configured in Jenkins
         jdk 'jdk-17.0.12'  // Adjust to match your configuration
     }
+
+    environment {
+        // SSH credentials and target details
+        KALI_USER = 'kali'  // SSH user for Kali Linux VM
+        KALI_VM_IP = '10.0.2.7'  // IP address of Kali Linux VM
+        TARGET_URL = 'http://localhost:8080'  // Local app running on Jenkins VM
+        ZAP_REPORT = 'zap-report.html'  // ZAP report file name
+    }
     
     stages {
         stage('Clone Repository') {
@@ -20,14 +28,48 @@ pipeline {
                 sh 'javac App.java'
             }
         }
-    
-
-          stage('Run Application') {
+        stage('Run Application Locally on Jenkins') {
             steps {
-                // Run the compiled Java class
-                sh 'java -cp . App'
+                // Run the Java application on port 8080 on Jenkins (Ubuntu VM)
+                sh 'nohup java app &'
             }
         }
+
+         stage('Run OWASP ZAP on Kali Linux VM') {
+            steps {
+                script {
+                    // SSH into Kali Linux VM and start OWASP ZAP in headless mode
+                    sh '''
+                    ssh -i /path/to/private-key ${kali}@${10.0.2.7} "zaproxy -daemon -host 127.0.0.1 -port 8080"
+                    ssh -i /path/to/private-key ${kali}@${10.0.2.7} "zap-baseline.py -t ${TARGET_URL} -r ${ZAP_REPORT} -d"
+                    '''
+                }
+            }
+        }
+
+         stage('Retrieve ZAP Report from Kali VM') {
+            steps {
+                // Retrieve the ZAP report from Kali Linux VM to Jenkins (Ubuntu VM)
+                sh '''
+                scp -i /path/to/private-key ${kali}@${10..0.2.7}:${ZAP_REPORT} .
+                '''
+            }
+        }
+
+         stage('Publish ZAP Report') {
+            steps {
+                // Publish the ZAP DAST report in Jenkins
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: '.', reportFiles: '${ZAP_REPORT}', reportName: 'OWASP ZAP DAST Report'])
+                }
+            }
+        }
+
+  //        stage('Run Application') {
+  //          steps {
+  //              // Run the compiled Java class
+  //              sh 'java -cp . App'
+  //          }
+  //      }
 
         
         stage('Test') {
@@ -43,10 +85,10 @@ pipeline {
             echo 'Pipeline completed'
         }
         success {
-            echo 'Pipeline completed successfully'
+            echo 'OWASP ZAP scan completed successfully'
         }
         failure {
-            echo 'Pipeline failed'
+            echo 'OWASP ZAP scan  failed'
         }
     }
 
