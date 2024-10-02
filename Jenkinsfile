@@ -35,30 +35,31 @@ pipeline {
             }
         }
 
-         stage('Run OWASP ZAP on Kali Linux VM') {
+         stages {
+        stage('Run OWASP ZAP on Kali Linux VM') {
             steps {
                 script {
                     // SSH into Kali Linux VM and start OWASP ZAP in headless mode
                     sh '''
                     #!/bin/bash
-                    ssh -i /path/to/private-key ${kali}@${10.0.2.7} "zaproxy -daemon -host 127.0.0.1 -port 8080"
-                    ssh -i /path/to/private-key ${kali}@${10.0.2.7} "zap-baseline.py -t ${TARGET_URL} -r ${ZAP_REPORT} -d"
+                    ssh -i /path/to/private-key kali@10.0.2.7 "zaproxy -daemon -host 127.0.0.1 -port 8080"
+                    ssh -i /path/to/private-key kali@10.0.2.7 "zap-baseline.py -t ${TARGET_URL} -r ${ZAP_REPORT} -d"
                     '''
                 }
             }
         }
 
-       stage('Retrieve ZAP Report from Kali VM') {
-        steps {
-            script {
-                // Retrieve the ZAP report from Kali Linux VM to Jenkins (Ubuntu VM)
-                sh '''
-                #!/bin/bash
-                scp -i /path/to/private-key kali@10.0.2.7:${ZAP_REPORT} .
-                '''
+        stage('Retrieve ZAP Report from Kali VM') {
+            steps {
+                script {
+                    // Retrieve the ZAP report from Kali Linux VM to Jenkins (Ubuntu VM)
+                    sh '''
+                    #!/bin/bash
+                    scp -i /path/to/private-key kali@10.0.2.7:${ZAP_REPORT} .
+                    '''
+                }
             }
         }
-    }
 
 
          stage('Publish ZAP Report') {
