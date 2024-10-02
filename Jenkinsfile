@@ -48,15 +48,18 @@ pipeline {
             }
         }
 
-         stage('Retrieve ZAP Report from Kali VM') {
-            steps {
+       stage('Retrieve ZAP Report from Kali VM') {
+        steps {
+            script {
                 // Retrieve the ZAP report from Kali Linux VM to Jenkins (Ubuntu VM)
                 sh '''
                 #!/bin/bash
-                scp -i /path/to/private-key ${kali}@${10..0.2.7}:${ZAP_REPORT} .
+                scp -i /path/to/private-key kali@10.0.2.7:${ZAP_REPORT} .
                 '''
             }
         }
+    }
+
 
          stage('Publish ZAP Report') {
             steps {
