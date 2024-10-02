@@ -31,7 +31,7 @@ pipeline {
         stage('Run Application Locally on Jenkins') {
             steps {
                 // Run the Java application on port 8080 on Jenkins (Ubuntu VM)
-                sh 'nohup java app &'
+                sh 'nohup java App'
             }
         }
 
