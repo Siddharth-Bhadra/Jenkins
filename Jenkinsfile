@@ -21,7 +21,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Siddharth-Bhadra/Jenkins.git'
             }
         }
-
+    }
     stage('Compile') {
         steps {
                 // Compile the Java file
@@ -46,8 +46,7 @@ pipeline {
                 }
             }
         }
-     stages {
-        stage('Run OWASP ZAP Baseline Scan') {
+    stage('Run OWASP ZAP Baseline Scan') {
             steps {
                 script {
                     // SSH into Kali Linux VM and run the ZAP baseline scan
