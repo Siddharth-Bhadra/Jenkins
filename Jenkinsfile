@@ -40,8 +40,8 @@ pipeline {
                     // SSH into Kali Linux VM and start OWASP ZAP in headless mode
                     sh '''
                     #!/bin/bash
-                    ssh -i /home/ubuntu/.ssh/id_rsa kali@10.0.2.7 "zaproxy -daemon -host 127.0.0.1 -port 8080"
-                    ssh -i /home/ubuntu/.ssh/id_rsa kali@10.0.2.7 "zap-baseline.py -t ${TARGET_URL} -r ${ZAP_REPORT} -d"
+                    ssh -i /var/lib/jenkins/.ssh/id_rsa kali@10.0.2.7 "zaproxy -daemon -host 127.0.0.1 -port 8080"
+                    ssh -i /var/lib/jenkins/.ssh/id_rsa kali@10.0.2.7 "zap-baseline.py -t ${TARGET_URL} -r ${ZAP_REPORT} -d"
                     '''
                 }
             }
@@ -53,7 +53,7 @@ pipeline {
                     // Retrieve the ZAP report from Kali Linux VM to Jenkins (Ubuntu VM)
                     sh '''
                     #!/bin/bash
-                    scp -i /path/to/private-key kali@10.0.2.7:${ZAP_REPORT} .
+                    scp -i /var/lib/jenkins/.ssh/id_rsa kali@10.0.2.7:${ZAP_REPORT} .
                     '''
                 }
             }
