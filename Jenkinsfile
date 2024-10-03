@@ -30,7 +30,7 @@ pipeline {
         stage('Run Application Locally on Jenkins') {
         steps {
                 // Run the Java application on port 8080 on Jenkins (Ubuntu VM)
-                sh 'nohup java App'
+                sh 'nohup java App &'
             }
         }
         stage('Run OWASP ZAP on Kali Linux VM') {
