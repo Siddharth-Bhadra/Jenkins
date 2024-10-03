@@ -93,8 +93,8 @@ pipeline {
                 echo 'No tests to run for now'
             }
         }
-    }
-     post {
+    
+    post {
         always {
             // Clean up or send notifications, if required
             echo 'Pipeline completed'
