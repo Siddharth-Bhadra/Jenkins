@@ -14,14 +14,12 @@ pipeline {
         ZAP_REPORT = 'zap-report.html'  // ZAP report file name
     }
     
-    stages {
-        stage('Clone Repository') {
+    stage('Clone Repository') {
             steps {
                 // Clone the code from Git
                 git branch: 'main', url: 'https://github.com/Siddharth-Bhadra/Jenkins.git'
             }
         }
-    }
     stage('Compile') {
         steps {
                 // Compile the Java file
