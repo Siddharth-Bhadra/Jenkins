@@ -71,7 +71,7 @@ pipeline {
         stage('Publish ZAP Report') {
             steps {
                 // Publish the ZAP DAST report in Jenkins
-                publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: '.', reportFiles: '${ZAP_REPORT}', reportName: 'OWASP ZAP DAST Report'])
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: '.', reportFiles: '${ZAP_REPORT}', reportName: 'zap-report'])
                 }
             }
 
