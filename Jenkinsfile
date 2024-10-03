@@ -46,6 +46,17 @@ pipeline {
                 }
             }
         }
+     stages {
+        stage('Run OWASP ZAP Baseline Scan') {
+            steps {
+                script {
+                    // SSH into Kali Linux VM and run the ZAP baseline scan
+                    sh '''
+                    ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@10.0.2.7 "/usr/share/zaproxy/zap-baseline.py -t ${TARGET_URL} -r ${ZAP_REPORT} -d"
+                    '''
+                }
+            }
+        }
 
     stage('Retrieve ZAP Report from Kali VM') {
         steps {
