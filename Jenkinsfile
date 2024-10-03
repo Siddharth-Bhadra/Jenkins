@@ -22,23 +22,21 @@ pipeline {
             }
         }
 
-         stage('Compile') {
-            steps {
+    stage('Compile') {
+        steps {
                 // Compile the Java file
                 sh 'javac App.java'
             }
         }
-        stage('Run Application Locally on Jenkins') {
-            steps {
+    stage('Run Application Locally on Jenkins') {
+        steps {
                 // Run the Java application on port 8080 on Jenkins (Ubuntu VM)
                 sh 'nohup java App'
             }
         }
-
-         stages {
-        stage('Run OWASP ZAP on Kali Linux VM') {
-            steps {
-                script {
+    stage('Run OWASP ZAP on Kali Linux VM') {
+        steps {
+            script {
                     // SSH into Kali Linux VM and start OWASP ZAP in headless mode
                     sh '''
                     #!/bin/bash
@@ -49,9 +47,9 @@ pipeline {
             }
         }
 
-        stage('Retrieve ZAP Report from Kali VM') {
-            steps {
-                script {
+    stage('Retrieve ZAP Report from Kali VM') {
+        steps {
+            script {
                     // Retrieve the ZAP report from Kali Linux VM to Jenkins (Ubuntu VM)
                     sh '''
                     #!/bin/bash
@@ -62,8 +60,8 @@ pipeline {
         }
 
 
-         stage('Publish ZAP Report') {
-            steps {
+    stage('Publish ZAP Report') {
+        steps {
                 // Publish the ZAP DAST report in Jenkins
                 publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: '.', reportFiles: '${ZAP_REPORT}', reportName: 'OWASP ZAP DAST Report'])
                 }
@@ -78,7 +76,7 @@ pipeline {
    //    }
 
         
-        stage('Test') {
+    stage('Test') {
             steps {
                 // If you have tests, you can add test steps here
                 echo 'No tests to run for now'
@@ -96,6 +94,5 @@ pipeline {
         failure {
             echo 'OWASP ZAP scan  failed'
         }
-    }
     }
 }
