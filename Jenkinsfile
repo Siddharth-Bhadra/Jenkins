@@ -61,12 +61,12 @@ pipeline {
             steps {
                 script {
                     // Retrieve the ZAP report from Kali Linux VM to Jenkins (Ubuntu VM)
-                    sh '''
-                    #!/bin/bash
-                    scp -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@10.0.2.7:${ZAP_REPORT} .
-                    '''
+             //       sh '''
+               //     #!/bin/bash
+                 //   scp -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@10.0.2.7:${ZAP_REPORT} .
+                   // '''
 
-                      echo 'Saving OWASP ZAP report...'
+                     echo 'Saving OWASP ZAP report...'
                     // Retrieve the ZAP report in XML format with API key if needed
                     sh """
                     curl -X GET "http://10.0.2.7:8080/OTHER/core/other/xmlreport/?apikey=${API_KEY}" \
