@@ -10,7 +10,7 @@ pipeline {
         // SSH credentials and target details
         KALI_USER = 'kali'  // SSH user for Kali Linux VM
         KALI_VM_IP = '192.168.56.102'  // IP address of Kali Linux VM
-        TARGET_URL = 'http://localhost:8080'  // Local app running on Jenkins VM
+        TARGET_URL = '192.168.56.105:8080'  // Local app running on Jenkins VM
         ZAP_REPORT = 'zap-report.html'  // ZAP report file name
         API_KEY = '' 
     }
