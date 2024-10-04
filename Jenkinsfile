@@ -41,7 +41,7 @@ pipeline {
                     sh '''
                     #!/bin/bash
                     ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@192.168.56.102 "zaproxy -daemon -host 127.0.0.1 -port 8080"
-                    ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@192.168.56.102 "zap-baseline.py -t ${TARGET_URL} -r ${ZAP_REPORT} -d"  
+                    ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@192.168.56.102 "zap-baseline.py -t http://192.168.56.105:8080 -r zap-report.html -d"  
                     '''
                     }
                  
