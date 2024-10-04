@@ -46,7 +46,7 @@ pipeline {
                     '''
                     sleep 10
                     sh '''
-                    ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@192.168.56.102 "/usr/share/zaproxy/zap-baseline.py -t http://192.168.56.105:8080 -r zap-report.html -d"
+                    ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@192.168.56.102 "/usr/share/zaproxy/zap-baseline.py -t http://192.168.56.105:8080 -r zap-report.html -I 127.0.0.1 -P 8080"
                     '''
                     }
                  
