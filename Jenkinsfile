@@ -26,12 +26,14 @@ pipeline {
             steps {
                 // Compile the Java file
                 sh 'javac App.java'
+                sleep 10
             }
         }
         stage('Run Application Locally on Jenkins') {
         steps {
                 // Run the Java application on port 8080 on Jenkins (Ubuntu VM)
                 sh 'nohup java App &'
+            
             }
         }
         stage('Run OWASP ZAP on Kali Linux VM') {
@@ -40,7 +42,7 @@ pipeline {
                     // SSH into Kali Linux VM and start OWASP ZAP in headless mode
                     sh '''
                     #!/bin/bash
-                    ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@192.168.56.102 "zaproxy -daemon -host 127.0.0.1 -port 8080"
+                    ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@192.168.56.102 "zaproxy -daemon -host 127.0.0.1 -port 8080 &"
                     ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@192.168.56.102 "zap-baseline.py -t http://192.168.56.105:8080 -r zap-report.html -d"  
                     '''
                     }
