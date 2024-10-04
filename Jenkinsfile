@@ -12,6 +12,7 @@ pipeline {
         KALI_VM_IP = '10.0.2.7'  // IP address of Kali Linux VM
         TARGET_URL = 'http://localhost:8080'  // Local app running on Jenkins VM
         ZAP_REPORT = 'zap-report.html'  // ZAP report file name
+        API_KEY = '' 
     }
     stages {
         stage('Clone Repository') {
@@ -64,6 +65,15 @@ pipeline {
                     #!/bin/bash
                     scp -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@10.0.2.7:${ZAP_REPORT} .
                     '''
+
+                      echo 'Saving OWASP ZAP report...'
+                    // Retrieve the ZAP report in XML format with API key if needed
+                    sh """
+                    curl -X GET "http://10.0.2.7:8080/OTHER/core/other/xmlreport/?apikey=${API_KEY}" \
+                    -H "Content-Type: application/x-www-form-urlencoded" \
+                    -o zap_report.xml
+                    """
+                    
                     }
                 }
             }
