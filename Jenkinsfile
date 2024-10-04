@@ -9,7 +9,7 @@ pipeline {
     environment {
         // SSH credentials and target details
         KALI_USER = 'kali'  // SSH user for Kali Linux VM
-        KALI_VM_IP = '10.0.2.7'  // IP address of Kali Linux VM
+        KALI_VM_IP = '192.168.56.102'  // IP address of Kali Linux VM
         TARGET_URL = 'http://localhost:8080'  // Local app running on Jenkins VM
         ZAP_REPORT = 'zap-report.html'  // ZAP report file name
         API_KEY = '' 
@@ -40,8 +40,8 @@ pipeline {
                     // SSH into Kali Linux VM and start OWASP ZAP in headless mode
                     sh '''
                     #!/bin/bash
-                    ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@10.0.2.7 "zaproxy -daemon -host 127.0.0.1 -port 8080"
-                    ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@10.0.2.7 "zap-baseline.py -t ${TARGET_URL} -r ${ZAP_REPORT} -d"  
+                    ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@192.168.56.102 "zaproxy -daemon -host 127.0.0.1 -port 8080"
+                    ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@192.168.56.102 "zap-baseline.py -t ${TARGET_URL} -r ${ZAP_REPORT} -d"  
                     '''
                     }
                  
@@ -52,7 +52,7 @@ pipeline {
        //             script {
                     // SSH into Kali Linux VM and run the ZAP baseline scan
          //           sh '''
-           //         ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@10.0.2.7 "/usr/share/zaproxy/zap-baseline.py -t ${TARGET_URL} -r ${ZAP_REPORT} -d"
+           //         ssh -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@192.168.56.102 "/usr/share/zaproxy/zap-baseline.py -t ${TARGET_URL} -r ${ZAP_REPORT} -d"
              //       '''
                //     }
                 //}
@@ -64,13 +64,13 @@ pipeline {
                     // Retrieve the ZAP report from Kali Linux VM to Jenkins (Ubuntu VM)
              //       sh '''
                //     #!/bin/bash
-                 //   scp -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@10.0.2.7:${ZAP_REPORT} .
+                 //   scp -i /var/lib/jenkins/.ssh/id_rsa  -o StrictHostKeyChecking=no kali@192.168.56.102:${ZAP_REPORT} .
                    // '''
 
                      echo 'Saving OWASP ZAP report...'
                     // Retrieve the ZAP report in XML format with API key if needed
                     sh """
-                    curl -X GET "http://10.0.2.7:8080/OTHER/core/other/xmlreport/?apikey=${API_KEY}" \
+                    curl -X GET "http://192.168.56.102:8080/OTHER/core/other/xmlreport/?apikey=${API_KEY}" \
                     -H "Content-Type: application/x-www-form-urlencoded" \
                     -o zap_report.xml
                     """
